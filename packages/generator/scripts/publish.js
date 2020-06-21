@@ -6,13 +6,14 @@ const log = require( 'npmlog' );
 /**
  * Internal dependencies
  */
+const { hasArgInCLI } = require( '../lib/cli-utils' );
+const { registerPlugins } = require( '../lib/plugins.js' );
 const checkWorkingTree = require( '../lib/check-working-tree' );
+const commit = require( '../lib/commit' );
 const detectChangedPackages = require( '../lib/detect-changed-packages' );
 const promptPackageVersions = require( '../lib/prompt' );
 const updatePackages = require( '../lib/update-packages' );
 const updateSatis = require( '../lib/update-satis' );
-const commit = require( '../lib/commit' );
-const { registerPlugins } = require( '../lib/plugins.js' );
 
 async function publish() {
 	await registerPlugins();
@@ -28,7 +29,10 @@ async function publish() {
 	const pkgsToPublish = await promptPackageVersions( pkgs );
 	await updatePackages( pkgsToPublish );
 	await updateSatis( pkgsToPublish );
-	await commit( pkgsToPublish );
+
+	if ( ! hasArgInCLI( '--dry-run' ) ) {
+		await commit( pkgsToPublish );
+	}
 }
 
 publish();

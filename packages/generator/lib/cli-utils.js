@@ -1,3 +1,5 @@
+/* eslint-disable no-undefined, consistent-return */
+
 /**
  * External dependencies
  */
@@ -56,6 +58,23 @@ const getArgsFromCLI = ( excludePrefixes ) => {
 };
 
 /**
+ * Get arg from CLI
+ */
+const getArgFromCLI = ( arg ) => {
+	for ( const cliArg of getArgsFromCLI() ) {
+		const [ name, value ] = cliArg.split( '=' );
+		if ( name === arg ) {
+			return value || null;
+		}
+	}
+};
+
+/**
+ * Check if arg is defined
+ */
+const hasArgInCLI = ( arg ) => getArgFromCLI( arg ) !== undefined;
+
+/**
  * Get Node args
  */
 const getNodeArgsFromCLI = () => {
@@ -101,5 +120,6 @@ const spawnScript = ( scriptName, args = [], nodeArgs = [] ) => {
 
 module.exports = {
 	getNodeArgsFromCLI,
+	hasArgInCLI,
 	spawnScript,
 };
