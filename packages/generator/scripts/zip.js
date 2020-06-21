@@ -52,7 +52,7 @@ async function zipPackages() {
 
 	if ( zipDirs.length === 0 ) {
 		log.info( '', 'No released packages in this commit. Skipping zip.' );
-		process.exit( 1 );
+		process.exit( 0 );
 	}
 
 	await asyncForEach( zipDirs, async ( {
