@@ -1,0 +1,38 @@
+{
+	"name": "@dekode/satis-generator",
+	"version": "0.0.0",
+	"description": "Build a Satis json config in a monorepo",
+	"license": "MIT",
+	"keywords": [
+		"satis",
+		"generator"
+	],
+	"homepage": "https://github.com/DekodeInteraktiv/satis-generator",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DekodeInteraktiv/satis-generator.git",
+		"directory": "packages/generator"
+	},
+	"bugs": "https://github.com/DekodeInteraktiv/satis-generator/issues",
+	"engines": {
+		"node": ">=0.12.0"
+	},
+	"bin": {
+		"satis-generator": "./bin/satis-generator.js"
+	},
+	"dependencies": {
+		"cross-spawn": "7.0.3",
+		"fast-glob": "3.2.4",
+		"inquirer": "7.2.0",
+		"jszip": "3.5.0",
+		"lodash": "4.17.15",
+		"make-dir": "3.1.0",
+		"npmlog": "4.1.2",
+		"ora": "4.0.4",
+		"semver": "7.3.2",
+		"simple-git": "2.9.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

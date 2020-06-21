@@ -1,0 +1,28 @@
+{
+	"name": "@dekode/satis-generator-plugin-wordpress",
+	"version": "0.0.0",
+	"description": "Change version numbers in WordPress plugins/themes when using satis-generator",
+	"license": "MIT",
+	"keywords": [
+		"satis",
+		"generator",
+		"wordpress"
+	],
+	"homepage": "https://github.com/DekodeInteraktiv/satis-generator",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DekodeInteraktiv/satis-generator.git",
+		"directory": "packages/wordpress"
+	},
+	"bugs": "https://github.com/DekodeInteraktiv/satis-generator/issues",
+	"main": "index.js",
+	"engines": {
+		"node": ">=0.12.0"
+	},
+	"dependencies": {
+		"replace-in-file": "6.1.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
