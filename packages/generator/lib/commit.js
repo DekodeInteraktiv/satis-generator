@@ -2,6 +2,8 @@
  * External dependencies
  */
 const git = require( 'simple-git' )();
+const ora = require( 'ora' );
+const log = require( 'npmlog' );
 
 /**
  * Internal dependencies
@@ -9,7 +11,12 @@ const git = require( 'simple-git' )();
 const { asyncForEach } = require( './utils' );
 const readConfig = require( './config' );
 
+// handle log.success()
+log.addLevel( 'success', 3001, { fg: 'green' } );
+
 async function commit( pkgs ) {
+	const spinner = ora( 'Pushing tags and commit' ).start();
+
 	const { publishMessage, branch } = await readConfig();
 	await git.add( '.' );
 	await git.commit( `${ publishMessage }\n${ pkgs.map( ( { name, version } ) => `- ${ name }@${ version }` ).join( '\n' ) }` );
@@ -19,7 +26,11 @@ async function commit( pkgs ) {
 		git.addTag( `${ name }@${ version }` );
 	} );
 
-	await git.push( 'origin', branch, [ '--follow-tags', '--no-verify' ] );
+	await git.pushTags( 'origin' );
+	await git.push( 'origin', branch, [ '--no-verify' ] );
+
+	spinner.stop();
+	log.success( 'pushed', `${ pkgs.length } releases to origin` );
 }
 
 module.exports = commit;
