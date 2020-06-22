@@ -23,11 +23,13 @@ async function commit( pkgs ) {
 
 	await asyncForEach( pkgs, async ( pkg ) => {
 		const { name, version } = pkg;
-		git.addTag( `${ name }@${ version }` );
+		git.addAnnotatedTag( `${ name }@${ version }`, `v${ version }` );
 	} );
 
-	await git.pushTags( 'origin' );
-	await git.push( 'origin', branch, [ '--no-verify' ] );
+	await git.push( 'origin', branch, {
+		'--follow-tags': true,
+		'--no-verify': true,
+	} );
 
 	spinner.stop();
 	log.success( 'pushed', `${ pkgs.length } releases to origin` );
