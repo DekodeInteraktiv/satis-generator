@@ -1,14 +1,15 @@
 /**
  * External dependencies
  */
-const debug = require( 'debug' )( 'generator' );
 const { get } = require( 'lodash' );
+const debug = require( 'debug' )( 'generator' );
 const fs = require( 'fs' );
 const git = require( 'simple-git' )();
 const glob = require( 'fast-glob' );
 const JSZip = require( 'jszip' );
 const log = require( 'npmlog' );
 const makeDir = require( 'make-dir' );
+const ora = require( 'ora' );
 const path = require( 'path' );
 
 /**
@@ -31,7 +32,10 @@ async function zipPackages() {
 	const { packages } = await readConfig();
 	const packageDirs = await glob( packages, { onlyDirectories: true } );
 
+	const spinner = ora( 'Fetching tags' ).start();
+	await git.fetch( { '--tags': true } );
 	const tags = await git.tag( [ '--points-at', 'HEAD' ] );
+	spinner.stop();
 
 	debug( 'tags found', tags );
 
