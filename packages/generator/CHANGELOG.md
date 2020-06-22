@@ -1,3 +1,6 @@
+## 0.1.4
+- Use exit code 0 when there is no packages to publish.
+
 ## 0.1.3
 - Init debug functions
 

@@ -23,7 +23,7 @@ async function publish() {
 	// If no packages is changed, inform user and die.
 	if ( pkgs.length === 0 ) {
 		log.info( '', 'No changed packages to publish' );
-		process.exit( 1 );
+		process.exit( 0 );
 	}
 
 	const pkgsToPublish = await promptPackageVersions( pkgs );
