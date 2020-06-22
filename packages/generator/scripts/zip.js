@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+const debug = require( 'debug' )( 'generator' );
 const { get } = require( 'lodash' );
 const fs = require( 'fs' );
 const git = require( 'simple-git' )();
@@ -32,6 +33,8 @@ async function zipPackages() {
 
 	const tags = await git.tag( [ '--points-at', 'HEAD' ] );
 
+	debug( 'tags found', tags );
+
 	const zipDirs = [];
 
 	await asyncForEach( packageDirs, async ( pkg ) => {
@@ -46,6 +49,8 @@ async function zipPackages() {
 					version,
 					ignore: get( composer, 'archive.exclude', [] ),
 				} );
+			} else {
+				debug( 'skipping package', name );
 			}
 		}
 	} );

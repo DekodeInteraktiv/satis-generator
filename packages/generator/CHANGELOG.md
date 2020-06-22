@@ -1,3 +1,6 @@
+## 0.1.3
+- Init debug functions
+
 ## 0.1.2
 - Push tags
 - Added loader when pushing tags and commit.
