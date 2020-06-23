@@ -6,14 +6,16 @@ const log = require( 'npmlog' );
 /**
  * Internal dependencies
  */
+const { getComposerConfig, asyncForEach } = require( '../lib/utils' );
+const { registerPlugins } = require( '../lib/plugins.js' );
 const checkWorkingTree = require( '../lib/check-working-tree' );
 const detectChangedPackages = require( '../lib/detect-changed-packages' );
-const { getComposerConfig, asyncForEach } = require( '../lib/utils' );
 
 // handle log.success()
 log.addLevel( 'success', 3001, { fg: 'green' } );
 
 async function changed() {
+	await registerPlugins();
 	await checkWorkingTree();
 
 	log.info( '', 'Looking for changed packages' );

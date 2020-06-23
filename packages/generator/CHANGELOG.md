@@ -1,3 +1,6 @@
+## 0.1.6
+- Register plugins in changed script.
+
 ## 0.1.5
 - Let plugins set changed status.
 
