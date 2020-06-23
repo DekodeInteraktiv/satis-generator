@@ -12,6 +12,7 @@ const path = require( 'path' );
  */
 const readConfig = require( './config' );
 const { asyncForEach, getComposerConfig } = require( './utils' );
+const { isChanged } = require( './plugins' );
 
 async function detectChangedPackages() {
 	const { packages } = await readConfig();
@@ -38,6 +39,25 @@ async function detectChangedPackages() {
 			const diff = await git.diff( [ 'HEAD', tagName, '--', dir ] );
 			if ( ! isEmpty( diff ) ) {
 				changedPackages.push( dir );
+			} else if ( isChanged.length !== 0 ) {
+				let changed = false;
+
+				// Let plugins set changed status.
+				await asyncForEach( isChanged, async ( fn ) => {
+					const changeStatus = await fn( {
+						dir,
+						name,
+						tagName,
+					} );
+
+					if ( changeStatus ) {
+						changed = true;
+					}
+				} );
+
+				if ( changed ) {
+					changedPackages.push( dir );
+				}
 			}
 		}
 	} );

@@ -9,6 +9,7 @@ const { has } = require( 'lodash' );
 const readConfig = require( './config' );
 
 const updatePackage = [];
+const isChanged = [];
 
 const registerPlugins = async () => {
 	const config = await readConfig();
@@ -19,10 +20,15 @@ const registerPlugins = async () => {
 		if ( has( pluginConfig, 'updatePackage' ) ) {
 			updatePackage.push( pluginConfig.updatePackage );
 		}
+
+		if ( has( pluginConfig, 'isChanged' ) ) {
+			isChanged.push( pluginConfig.isChanged );
+		}
 	} );
 };
 
 module.exports = {
+	isChanged,
 	registerPlugins,
 	updatePackage,
 };
