@@ -8,7 +8,6 @@ const log = require( 'npmlog' );
  */
 const { getComposerConfig, asyncForEach } = require( '../lib/utils' );
 const { registerPlugins } = require( '../lib/plugins.js' );
-const checkWorkingTree = require( '../lib/check-working-tree' );
 const detectChangedPackages = require( '../lib/detect-changed-packages' );
 
 // handle log.success()
@@ -16,7 +15,6 @@ log.addLevel( 'success', 3001, { fg: 'green' } );
 
 async function changed() {
 	await registerPlugins();
-	await checkWorkingTree();
 
 	log.info( '', 'Looking for changed packages' );
 	const pkgs = await detectChangedPackages();
