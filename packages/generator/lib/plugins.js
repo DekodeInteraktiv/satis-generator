@@ -15,7 +15,7 @@ const registerPlugins = async () => {
 	const config = await readConfig();
 
 	config.plugins.forEach( ( plugin ) => {
-		const pluginConfig = require( plugin );
+		const pluginConfig = require( plugin ); // eslint-disable-line
 
 		if ( has( pluginConfig, 'updatePackage' ) ) {
 			updatePackage.push( pluginConfig.updatePackage );

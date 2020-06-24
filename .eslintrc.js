@@ -1,9 +1,9 @@
 module.exports = {
 	extends: [
-		'plugin:@nisje/base',
+		'plugin:@dekode/base',
 	],
 	plugins: [
-		'@nisje',
+		'@dekode',
 	],
 	rules: {},
 };

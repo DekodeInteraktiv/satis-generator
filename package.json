@@ -11,8 +11,8 @@
 		"@dekode/satis-generator-plugin-wordpress": "file:packages/wordpress"
 	},
 	"devDependencies": {
-		"@nisje/eslint-plugin": "0.6.0",
-		"eslint": "7.3.0",
+		"@dekode/eslint-plugin": "0.0.1",
+		"eslint": "7.3.1",
 		"lerna": "3.22.1"
 	}
 }
