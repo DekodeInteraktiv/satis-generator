@@ -31,7 +31,7 @@
 		"npmlog": "4.1.2",
 		"ora": "4.0.4",
 		"semver": "7.3.2",
-		"simple-git": "2.9.0"
+		"simple-git": "2.11.0"
 	},
 	"publishConfig": {
 		"access": "public"
