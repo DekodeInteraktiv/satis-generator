@@ -1,8 +1,11 @@
+/* eslint-disable no-console */
+
 /**
  * External dependencies
  */
 const inquirer = require( 'inquirer' );
 const semver = require( 'semver' );
+const { find } = require( 'lodash' );
 
 /**
  * Internal dependencies
@@ -72,6 +75,32 @@ async function promptPackageVersions( pkgs ) {
 			version,
 		} );
 	} );
+
+	/**
+	 * Confirm selected versions
+	 */
+	console.log( '\nChanges:' );
+	packageVersions.forEach( ( pkg ) => {
+		const {
+			composer: {
+				version,
+			},
+		} = find( composerConfigs, ( cpkg ) => cpkg.composer.name === pkg.name );
+
+		console.log( ` - ${ pkg.name }: ${ version } => ${ pkg.version }` );
+	} );
+	console.log( '' );
+
+	const { confirm } = await inquirer.prompt( {
+		type: 'confirm',
+		name: 'confirm',
+		message: 'Are you sure you want to publish these packages?',
+		default: true,
+	} );
+
+	if ( ! confirm ) {
+		process.exit( 0 );
+	}
 
 	return packageVersions;
 }
