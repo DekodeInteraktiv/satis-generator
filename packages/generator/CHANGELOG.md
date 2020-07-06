@@ -1,3 +1,6 @@
+## Unreleased
+- Added confirm changes prompt.
+
 ## 0.1.6
 - Don't check working tree when looking for changed packages
 - Register plugins in changed script.
