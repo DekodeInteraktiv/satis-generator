@@ -51,7 +51,7 @@ async function readConfig() {
 	}
 
 	config = {
-		branch: 'master',
+		branch: 'main',
 		publishMessage: 'chore(release): publish',
 		plugins: [],
 		...config,

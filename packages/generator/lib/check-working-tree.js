@@ -52,7 +52,7 @@ async function throwIfUncommited() {
 }
 
 /**
- * Throw an error if current branch isn't master.
+ * Throw an error if current branch isn't the same as in the config.
  *
  * @return {void}
  */

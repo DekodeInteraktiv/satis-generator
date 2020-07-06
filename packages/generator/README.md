@@ -12,7 +12,7 @@ satis-generator zip      # build zips of released packages
 {
   "zipsDistUrl": "https://cdn.example.com",
   "publishMessage": "chore(release): publish",
-  "branch": "master",
+  "branch": "main",
   "satisFile": "satis.json",
   "plugins": [],
   "packages": [
