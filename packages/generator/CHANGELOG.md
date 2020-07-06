@@ -1,5 +1,6 @@
 ## Unreleased
 - Added confirm changes prompt.
+- List uncommited files in working tree check.
 
 ## 0.1.6
 - Don't check working tree when looking for changed packages

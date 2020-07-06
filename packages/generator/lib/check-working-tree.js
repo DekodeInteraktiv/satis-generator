@@ -36,9 +36,17 @@ async function throwIfUncommited() {
 	const { files } = await git.status();
 
 	if ( ! isEmpty( files ) ) {
+		let filesList = '';
+
+		files.forEach( ( file ) => {
+			filesList += `\n - ${ file.path }`;
+		} );
+
 		throw new ValidationError(
 			'EUNCOMMIT',
 			'Working tree has uncommitted changes, please commit or remove the changes before continuing.',
+			'\n\nUncommitted files:',
+			filesList,
 		);
 	}
 }
