@@ -12,7 +12,7 @@
 	},
 	"devDependencies": {
 		"@dekode/eslint-plugin": "0.0.1",
-		"eslint": "7.3.1",
+		"eslint": "7.4.0",
 		"lerna": "3.22.1"
 	}
 }
