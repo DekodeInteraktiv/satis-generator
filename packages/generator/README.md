@@ -19,7 +19,9 @@ satis-generator zip      # build zips of released packages
     "plugins/*",
     "projects/*",
     "themes/*"
-  ]
+  ],
+  "changelogFilename": "CHANGELOG.md",
+  "changelogTitle": "## Unreleased"
 }
 ```
 
@@ -29,6 +31,8 @@ satis-generator zip      # build zips of released packages
 - `satisFile`: Location of your satis json file.
 - `plugins`: Array of plugins to load.
 - `packages`: Array of globs to use as package locations.
+- `changelogFile`: Name of the changelog file in the package.
+- `changelogTitle`: Title used in the changelog on unreleased versions.
 
 ## satis file
 The script need a satis json file to work. When initializing a new project create
