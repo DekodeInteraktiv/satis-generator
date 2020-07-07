@@ -5,5 +5,7 @@ module.exports = {
 	plugins: [
 		'@dekode',
 	],
-	rules: {},
+	rules: {
+		'import/no-unresolved': 'off',
+	},
 };

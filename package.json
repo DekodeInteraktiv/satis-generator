@@ -6,10 +6,6 @@
 		"publish:changed": "lerna changed",
 		"publish:prod": "lerna publish"
 	},
-	"dependencies": {
-		"@dekode/satis-generator": "file:packages/generator",
-		"@dekode/satis-generator-plugin-wordpress": "file:packages/wordpress"
-	},
 	"devDependencies": {
 		"@dekode/eslint-plugin": "0.0.1",
 		"eslint": "7.4.0",
