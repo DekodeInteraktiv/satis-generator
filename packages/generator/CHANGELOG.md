@@ -1,4 +1,4 @@
-## Unreleased
+## 0.2.0
 - Added confirm changes prompt.
 - List uncommited files in working tree check.
 - Update unreleased title in changelog to version number.
