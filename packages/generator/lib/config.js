@@ -54,6 +54,8 @@ async function readConfig() {
 		branch: 'main',
 		publishMessage: 'chore(release): publish',
 		plugins: [],
+		changelogFilename: 'CHANGELOG.md',
+		changelogTitle: '## Unreleased',
 		...config,
 	};
 
