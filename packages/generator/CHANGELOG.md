@@ -1,6 +1,7 @@
 ## Unreleased
 - Added confirm changes prompt.
 - List uncommited files in working tree check.
+- Update unreleased title in changelog to version number.
 
 ### Breaking changes
 - Default branch config was changed from `master` to `main`.

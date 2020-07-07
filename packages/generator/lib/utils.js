@@ -63,9 +63,36 @@ const getComposerConfig = async ( pkg ) => {
  */
 const zipName = ( name, version ) => `${ name.replace( /\//g, '-' ) }-${ version }.zip`;
 
+/**
+ * Get current date
+ *
+ * @return {string} Date string
+ */
+const getDate = () => {
+	const monthNames = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	];
+
+	const d = new Date();
+
+	return `${ monthNames[ d.getMonth() ] } ${ d.getDate() }, ${ d.getFullYear() }`;
+};
+
 module.exports = {
 	asyncForEach,
 	getComposerConfig,
 	getComposerPath,
+	getDate,
 	zipName,
 };
