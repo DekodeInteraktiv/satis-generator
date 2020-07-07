@@ -1,6 +1,6 @@
 {
 	"name": "@dekode/satis-generator-plugin-wordpress",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"description": "Change version numbers in WordPress plugins/themes when using satis-generator",
 	"license": "MIT",
 	"keywords": [
