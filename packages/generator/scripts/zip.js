@@ -9,7 +9,7 @@ const glob = require( 'fast-glob' );
 const JSZip = require( 'jszip' );
 const log = require( 'npmlog' );
 const makeDir = require( 'make-dir' );
-const ora = require( 'ora' );
+// const ora = require( 'ora' );
 const path = require( 'path' );
 
 /**
@@ -32,10 +32,10 @@ async function zipPackages() {
 	const { packages } = await readConfig();
 	const packageDirs = await glob( packages, { onlyDirectories: true } );
 
-	const spinner = ora( 'Fetching tags' ).start();
+	// const spinner = ora( 'Fetching tags' ).start();
 	await git.fetch( { '--tags': true } );
 	const tags = await git.tag( [ '--points-at', 'HEAD' ] );
-	spinner.stop();
+	// spinner.stop();
 
 	debug( 'tags found', tags );
 
