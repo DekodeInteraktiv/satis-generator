@@ -1,3 +1,7 @@
+## 0.3.0
+- Updated dependencies
+- Add more error handling.
+
 ## 0.2.0
 - Added confirm changes prompt.
 - List uncommited files in working tree check.

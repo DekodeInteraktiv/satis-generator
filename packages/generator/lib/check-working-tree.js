@@ -1,8 +1,9 @@
 /**
  * External dependencies
  */
-const git = require( 'simple-git' )();
 const { isEmpty } = require( 'lodash' );
+const git = require( 'simple-git' )();
+const log = require( 'npmlog' );
 const ora = require( 'ora' );
 
 /**
@@ -79,7 +80,14 @@ async function checkWorkingTree() {
 	await throwIfBranch();
 
 	const spinner = ora( 'Checking that branch is up to date with origin' ).start();
-	await git.fetch();
+
+	try {
+		await git.fetch();
+	} catch ( e ) {
+		log.error( 'EGITFETCH', e );
+		process.exit( 0 );
+	}
+
 	spinner.stop();
 
 	await throwIfBehind();
