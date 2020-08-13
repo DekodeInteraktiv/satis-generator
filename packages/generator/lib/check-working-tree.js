@@ -79,6 +79,7 @@ async function checkWorkingTree() {
 	await throwIfUncommited();
 	await throwIfBranch();
 
+	log.info( '', 'Checking that branch is up to date with origin' );
 	// const spinner = ora( 'Checking that branch is up to date with origin' ).start();
 
 	try {

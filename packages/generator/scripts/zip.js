@@ -32,6 +32,7 @@ async function zipPackages() {
 	const { packages } = await readConfig();
 	const packageDirs = await glob( packages, { onlyDirectories: true } );
 
+	log.info( '', 'Fetching tags' );
 	// const spinner = ora( 'Fetching tags' ).start();
 	await git.fetch( { '--tags': true } );
 	const tags = await git.tag( [ '--points-at', 'HEAD' ] );
