@@ -4,7 +4,7 @@
 const { isEmpty } = require( 'lodash' );
 const git = require( 'simple-git' )();
 const log = require( 'npmlog' );
-const ora = require( 'ora' );
+// const ora = require( 'ora' );
 
 /**
  * Internal dependencies
@@ -79,7 +79,8 @@ async function checkWorkingTree() {
 	await throwIfUncommited();
 	await throwIfBranch();
 
-	const spinner = ora( 'Checking that branch is up to date with origin' ).start();
+	log.info( '', 'Checking that branch is up to date with origin' );
+	// const spinner = ora( 'Checking that branch is up to date with origin' ).start();
 
 	try {
 		await git.fetch();
@@ -88,7 +89,7 @@ async function checkWorkingTree() {
 		process.exit( 0 );
 	}
 
-	spinner.stop();
+	// spinner.stop();
 
 	await throwIfBehind();
 }

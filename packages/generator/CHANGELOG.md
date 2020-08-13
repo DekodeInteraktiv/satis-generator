@@ -1,3 +1,6 @@
+## 0.3.1
+- Disable spinner. It hides password input when you require it on ssh key.
+
 ## 0.3.0
 - Updated dependencies
 - Add more error handling.

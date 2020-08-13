@@ -2,7 +2,7 @@
  * External dependencies
  */
 const git = require( 'simple-git' )();
-const ora = require( 'ora' );
+// const ora = require( 'ora' );
 const log = require( 'npmlog' );
 
 /**
@@ -15,7 +15,8 @@ const readConfig = require( './config' );
 log.addLevel( 'success', 3001, { fg: 'green' } );
 
 async function commit( pkgs ) {
-	const spinner = ora( 'Pushing tags and commit' ).start();
+	log.info( '', 'Pushing tags and commit' );
+	// const spinner = ora( 'Pushing tags and commit' ).start();
 
 	const { publishMessage, branch } = await readConfig();
 	await git.add( '.' );
@@ -31,7 +32,7 @@ async function commit( pkgs ) {
 		'--no-verify': true,
 	} );
 
-	spinner.stop();
+	// spinner.stop();
 	log.success( 'pushed', `${ pkgs.length } releases to origin` );
 }
 
