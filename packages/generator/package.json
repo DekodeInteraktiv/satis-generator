@@ -32,7 +32,7 @@
 		"ora": "5.0.0",
 		"replace-in-file": "6.1.0",
 		"semver": "7.3.2",
-		"simple-git": "2.19.0"
+		"simple-git": "2.23.0"
 	},
 	"publishConfig": {
 		"access": "public"
