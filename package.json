@@ -8,7 +8,7 @@
 	},
 	"devDependencies": {
 		"@dekode/eslint-plugin": "0.0.1",
-		"eslint": "7.7.0",
+		"eslint": "7.18.0",
 		"lerna": "3.22.1"
 	}
 }
