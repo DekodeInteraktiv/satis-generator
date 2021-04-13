@@ -1,14 +1,23 @@
 {
 	"name": "satis-generator-monorepo",
 	"private": true,
+	"engines": {
+		"node": "14",
+		"npm": "6"
+	},
 	"scripts": {
 		"lint": "eslint .",
 		"publish:changed": "lerna changed",
-		"publish:prod": "lerna publish"
+		"publish:prod": "lerna publish",
+		"format": "prettier --write ."
 	},
 	"devDependencies": {
-		"@dekode/eslint-plugin": "0.0.1",
+		"@typescript-eslint/eslint-plugin": "^4.22.0",
+		"@typescript-eslint/parser": "4.22.0",
 		"eslint": "7.24.0",
-		"lerna": "4.0.0"
+		"eslint-config-prettier": "8.1.0",
+		"lerna": "4.0.0",
+		"prettier": "2.2.1",
+		"typescript": "4.2.4"
 	}
 }

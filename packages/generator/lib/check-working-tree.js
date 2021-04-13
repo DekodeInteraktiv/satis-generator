@@ -1,16 +1,16 @@
 /**
  * External dependencies
  */
-const { isEmpty } = require( 'lodash' );
-const git = require( 'simple-git' )();
-const log = require( 'npmlog' );
+const { isEmpty } = require('lodash');
+const git = require('simple-git')();
+const log = require('npmlog');
 // const ora = require( 'ora' );
 
 /**
  * Internal dependencies
  */
-const ValidationError = require( './validation-error' );
-const readConfig = require( './config' );
+const ValidationError = require('./validation-error');
+const readConfig = require('./config');
 
 /**
  * Throw an error if current branch hasn't pull latest changes from origin.
@@ -20,7 +20,7 @@ const readConfig = require( './config' );
 async function throwIfBehind() {
 	const { behind } = await git.status();
 
-	if ( behind !== 0 ) {
+	if (behind !== 0) {
 		throw new ValidationError(
 			'EBEHIND',
 			'The working branch is behind origin. Please pull before continuing.',
@@ -36,12 +36,12 @@ async function throwIfBehind() {
 async function throwIfUncommited() {
 	const { files } = await git.status();
 
-	if ( ! isEmpty( files ) ) {
+	if (!isEmpty(files)) {
 		let filesList = '';
 
-		files.forEach( ( file ) => {
-			filesList += `\n - ${ file.path }`;
-		} );
+		files.forEach((file) => {
+			filesList += `\n - ${file.path}`;
+		});
 
 		throw new ValidationError(
 			'EUNCOMMIT',
@@ -61,10 +61,10 @@ async function throwIfBranch() {
 	const { current } = await git.status();
 	const { branch } = await readConfig();
 
-	if ( current !== branch ) {
+	if (current !== branch) {
 		throw new ValidationError(
 			'EBRANCH',
-			`Current branch is "${ current }". The generator should be runned in "${ branch }".`,
+			`Current branch is "${current}". The generator should be runned in "${branch}".`,
 		);
 	}
 }
@@ -79,14 +79,14 @@ async function checkWorkingTree() {
 	await throwIfUncommited();
 	await throwIfBranch();
 
-	log.info( '', 'Checking that branch is up to date with origin' );
+	log.info('', 'Checking that branch is up to date with origin');
 	// const spinner = ora( 'Checking that branch is up to date with origin' ).start();
 
 	try {
 		await git.fetch();
-	} catch ( e ) {
-		log.error( 'EGITFETCH', e );
-		process.exit( 0 );
+	} catch (e) {
+		log.error('EGITFETCH', e);
+		process.exit(0);
 	}
 
 	// spinner.stop();

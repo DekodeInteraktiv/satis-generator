@@ -1,12 +1,12 @@
 /**
  * External dependencies
  */
-const { has } = require( 'lodash' );
+const { has } = require('lodash');
 
 /**
  * Internal dependencies
  */
-const readConfig = require( './config' );
+const readConfig = require('./config');
 
 const updatePackage = [];
 const isChanged = [];
@@ -14,17 +14,17 @@ const isChanged = [];
 const registerPlugins = async () => {
 	const config = await readConfig();
 
-	config.plugins.forEach( ( plugin ) => {
-		const pluginConfig = require( plugin ); // eslint-disable-line
+	config.plugins.forEach((plugin) => {
+		const pluginConfig = require(plugin); // eslint-disable-line
 
-		if ( has( pluginConfig, 'updatePackage' ) ) {
-			updatePackage.push( pluginConfig.updatePackage );
+		if (has(pluginConfig, 'updatePackage')) {
+			updatePackage.push(pluginConfig.updatePackage);
 		}
 
-		if ( has( pluginConfig, 'isChanged' ) ) {
-			isChanged.push( pluginConfig.isChanged );
+		if (has(pluginConfig, 'isChanged')) {
+			isChanged.push(pluginConfig.isChanged);
 		}
-	} );
+	});
 };
 
 module.exports = {

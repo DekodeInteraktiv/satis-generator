@@ -1,0 +1,25 @@
+{
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint"],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"prettier"
+	],
+	"env": {
+		"node": true,
+		"es6": true
+	},
+	"rules": {
+		"@typescript-eslint/no-var-requires": 0
+	},
+	"overrides": [
+		{
+			// enable the rule specifically for TypeScript files
+			"files": ["*.ts"],
+			"rules": {
+				"@typescript-eslint/no-var-requires": "error"
+			}
+		}
+	]
+}

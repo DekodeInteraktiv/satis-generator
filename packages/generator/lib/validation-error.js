@@ -1,16 +1,16 @@
 /**
  * External dependencies
  */
-const log = require( 'npmlog' );
+const log = require('npmlog');
 
 class ValidationError extends Error {
-	constructor( prefix, message, ...rest ) {
-		super( message );
+	constructor(prefix, message, ...rest) {
+		super(message);
 		this.name = 'ValidationError';
 		this.prefix = prefix;
 		log.resume();
-		log.error( prefix, message, ...rest );
-		process.exit( 0 );
+		log.error(prefix, message, ...rest);
+		process.exit(0);
 	}
 }
 

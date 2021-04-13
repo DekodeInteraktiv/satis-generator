@@ -1,13 +1,13 @@
 /**
  * External dependencies
  */
-const path = require( 'path' );
-const fs = require( 'fs' ).promises;
+const path = require('path');
+const fs = require('fs').promises;
 
 /**
  * Internal dependencies
  */
-const ValidationError = require( './validation-error' );
+const ValidationError = require('./validation-error');
 
 /**
  * Async foreach helper function
@@ -16,9 +16,9 @@ const ValidationError = require( './validation-error' );
  * @param  {Function} callback Callback
  * @return {Promise}
  */
-const asyncForEach = async ( array, callback ) => {
-	for ( let index = 0; index < array.length; index++ ) {
-		await callback( array[ index ], index, array );
+const asyncForEach = async (array, callback) => {
+	for (let index = 0; index < array.length; index++) {
+		await callback(array[index], index, array);
 	}
 };
 
@@ -27,27 +27,27 @@ const asyncForEach = async ( array, callback ) => {
  * @param  {string} pkg Package dir
  * @return {string}     Composer.json path
  */
-const getComposerPath = ( pkg ) => path.resolve( pkg, 'composer.json' );
+const getComposerPath = (pkg) => path.resolve(pkg, 'composer.json');
 
 /**
  * Read composer json file.
  * @param  {string} pkg Package dir
  * @return {Promise}    Config
  */
-const getComposerConfig = async ( pkg ) => {
-	const composerPath = getComposerPath( pkg );
+const getComposerConfig = async (pkg) => {
+	const composerPath = getComposerPath(pkg);
 	let config;
 
 	try {
-		config = JSON.parse( await fs.readFile( composerPath, 'utf8' ) );
-	} catch ( error ) {
-		if ( error instanceof SyntaxError ) {
+		config = JSON.parse(await fs.readFile(composerPath, 'utf8'));
+	} catch (error) {
+		if (error instanceof SyntaxError) {
 			throw new ValidationError(
-				`Invalid ${ composerPath }: ${ error.message }`,
+				`Invalid ${composerPath}: ${error.message}`,
 			);
 		} else {
 			throw new ValidationError(
-				`Could not read ${ composerPath }: ${ error.message }`,
+				`Could not read ${composerPath}: ${error.message}`,
 			);
 		}
 	}
@@ -61,7 +61,7 @@ const getComposerConfig = async ( pkg ) => {
  * @param  {string} version Package version
  * @return {string}         Zip name
  */
-const zipName = ( name, version ) => `${ name.replace( /\//g, '-' ) }-${ version }.zip`;
+const zipName = (name, version) => `${name.replace(/\//g, '-')}-${version}.zip`;
 
 /**
  * Get current date
@@ -86,7 +86,7 @@ const getDate = () => {
 
 	const d = new Date();
 
-	return `${ monthNames[ d.getMonth() ] } ${ d.getDate() }, ${ d.getFullYear() }`;
+	return `${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 };
 
 module.exports = {

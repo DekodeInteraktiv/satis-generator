@@ -1,16 +1,16 @@
 /**
  * External dependencies
  */
-const { findIndex, sortBy } = require( 'lodash' );
-const path = require( 'path' );
-const fs = require( 'fs' ).promises;
+const { findIndex, sortBy } = require('lodash');
+const path = require('path');
+const fs = require('fs').promises;
 
 /**
  * Internal dependencies
  */
-const ValidationError = require( './validation-error' );
-const { getComposerConfig, asyncForEach, zipName } = require( './utils' );
-const readConfig = require( './config' );
+const ValidationError = require('./validation-error');
+const { getComposerConfig, asyncForEach, zipName } = require('./utils');
+const readConfig = require('./config');
 
 /**
  * Add to satis
@@ -18,48 +18,53 @@ const readConfig = require( './config' );
  * @param {String} dir Dir where the composer file lives.
  * @return {boolean}
  */
-async function updateSatis( pkgs ) {
+async function updateSatis(pkgs) {
 	const { satisFile, zipsDistUrl } = await readConfig();
-	const satisPath = path.resolve( process.cwd(), satisFile );
+	const satisPath = path.resolve(process.cwd(), satisFile);
 
 	let satis;
 	try {
-		satis = JSON.parse( await fs.readFile( satisPath, 'utf8' ) );
-	} catch ( error ) {
-		if ( error instanceof SyntaxError ) {
-			throw new ValidationError(
-				`Invalid ${ satisPath }: ${ error.message }`,
-			);
+		satis = JSON.parse(await fs.readFile(satisPath, 'utf8'));
+	} catch (error) {
+		if (error instanceof SyntaxError) {
+			throw new ValidationError(`Invalid ${satisPath}: ${error.message}`);
 		} else {
 			throw new ValidationError(
-				`Could not read ${ satisPath }: ${ error.message }`,
+				`Could not read ${satisPath}: ${error.message}`,
 			);
 		}
 	}
 
-	await asyncForEach( pkgs, async ( pkg ) => {
-		const composer = await getComposerConfig( pkg.package );
-		const index = findIndex( satis.repositories, ( { package: { name, version } } ) => name === composer.name && version === composer.version );
+	await asyncForEach(pkgs, async (pkg) => {
+		const composer = await getComposerConfig(pkg.package);
+		const index = findIndex(
+			satis.repositories,
+			({ package: { name, version } }) =>
+				name === composer.name && version === composer.version,
+		);
 
-		if ( index === -1 ) {
-			const fileName = zipName( composer.name, composer.version );
+		if (index === -1) {
+			const fileName = zipName(composer.name, composer.version);
 
-			satis.repositories.push( {
+			satis.repositories.push({
 				type: 'package',
 				package: {
 					...composer,
 					require: composer.require || {},
 					dist: {
-						url: `${ zipsDistUrl }/${ fileName }`,
+						url: `${zipsDistUrl}/${fileName}`,
 						type: 'zip',
 					},
 				},
-			} );
+			});
 		}
-	} );
+	});
 
-	satis.repositories = sortBy( satis.repositories, [ 'package.name', 'package.version' ] );
-	await fs.writeFile( satisPath, JSON.stringify( satis, null, '\t' ), 'utf8' );
+	satis.repositories = sortBy(satis.repositories, [
+		'package.name',
+		'package.version',
+	]);
+	await fs.writeFile(satisPath, JSON.stringify(satis, null, '\t'), 'utf8');
 }
 
 module.exports = updateSatis;
