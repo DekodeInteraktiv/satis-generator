@@ -10,6 +10,7 @@ const readConfig = require('./config');
 
 const updatePackage = [];
 const isChanged = [];
+const satisConfig = [];
 
 const registerPlugins = async () => {
 	const config = await readConfig();
@@ -24,11 +25,16 @@ const registerPlugins = async () => {
 		if (has(pluginConfig, 'isChanged')) {
 			isChanged.push(pluginConfig.isChanged);
 		}
+
+		if (has(pluginConfig, 'satisConfig')) {
+			satisConfig.push(pluginConfig.satisConfig);
+		}
 	});
 };
 
 module.exports = {
 	isChanged,
+	satisConfig,
 	registerPlugins,
 	updatePackage,
 };

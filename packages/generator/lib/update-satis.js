@@ -11,6 +11,7 @@ const fs = require('fs').promises;
 const ValidationError = require('./validation-error');
 const { getComposerConfig, asyncForEach, zipName } = require('./utils');
 const readConfig = require('./config');
+const { satisConfig } = require('./plugins');
 
 /**
  * Add to satis
@@ -36,7 +37,7 @@ async function updateSatis(pkgs) {
 	}
 
 	await asyncForEach(pkgs, async (pkg) => {
-		const composer = await getComposerConfig(pkg.package);
+		let composer = await getComposerConfig(pkg.package);
 		const index = findIndex(
 			satis.repositories,
 			({ package: { name, version } }) =>
@@ -45,6 +46,12 @@ async function updateSatis(pkgs) {
 
 		if (index === -1) {
 			const fileName = zipName(composer.name, composer.version);
+
+			if (satisConfig.length !== 0) {
+				await asyncForEach(satisConfig, async (fn) => {
+					composer = await fn( composer );
+				});
+			}
 
 			satis.repositories.push({
 				type: 'package',
