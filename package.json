@@ -9,6 +9,7 @@
 		"lint": "eslint .",
 		"publish:changed": "lerna changed",
 		"publish:prod": "lerna publish",
+		"publish:next": "lerna publish --dist-tag next",
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
