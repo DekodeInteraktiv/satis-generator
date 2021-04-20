@@ -56,6 +56,7 @@ async function readConfig() {
 		plugins: [],
 		changelogFilename: 'CHANGELOG.md',
 		changelogTitle: '## Unreleased',
+		version: 'independent',
 		...config,
 	};
 

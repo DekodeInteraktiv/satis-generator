@@ -5,12 +5,15 @@
  */
 const inquirer = require('inquirer');
 const semver = require('semver');
+const fs = require('fs').promises;
+const path = require('path');
 const { find } = require('lodash');
 
 /**
  * Internal dependencies
  */
 const { asyncForEach, getComposerConfig } = require('./utils');
+const readConfig = require('./config');
 
 /**
  * Select packages to bump and select versions
@@ -105,4 +108,81 @@ async function promptPackageVersions(pkgs) {
 	return packageVersions;
 }
 
-module.exports = promptPackageVersions;
+/**
+ * Bump version
+ *
+ * @param  {Array} pkgs Packages paths.
+ * @return {Array}      Bump paths and version
+ */
+async function promptVersion(pkgs) {
+	const packageVersions = [];
+	const { version: v } = await readConfig();
+
+	const patch = semver.inc(v, 'patch');
+	const minor = semver.inc(v, 'minor');
+	const major = semver.inc(v, 'major');
+
+	const { version } = await inquirer.prompt({
+		type: 'list',
+		name: 'version',
+		message: `Select a new version (currently ${v})`,
+		choices: [
+			{ name: `Major (${major})`, value: major },
+			{ name: `Minor (${minor})`, value: minor },
+			{ name: `Patch (${patch})`, value: patch },
+		],
+	});
+
+	const composerConfigs = await Promise.all(
+		pkgs.map(async (pkg) => ({
+			path: pkg,
+			composer: await getComposerConfig(pkg),
+		})),
+	);
+
+	composerConfigs.forEach((pkg) => {
+		packageVersions.push({
+			name: pkg.name,
+			package: pkg.path,
+			version,
+		});
+	});
+
+	/**
+	 * Confirm selected versions
+	 */
+	console.log('\nChanges:');
+	packageVersions.forEach((pkg) => {
+		const {
+			composer: { version },
+		} = find(composerConfigs, (cpkg) => cpkg.composer.name === pkg.name);
+
+		console.log(` - ${pkg.name}: ${version} => ${pkg.version}`);
+	});
+	console.log('');
+
+	const { confirm } = await inquirer.prompt({
+		type: 'confirm',
+		name: 'confirm',
+		message: 'Are you sure you want to publish these packages?',
+		default: true,
+	});
+
+	if (!confirm) {
+		process.exit(0);
+	}
+
+	const configPath = path.resolve(process.cwd(), 'satis-generator.json');
+	const config = JSON.parse(await fs.readFile(configPath, 'utf8'));
+	config.version = version;
+
+	// Write new config file.
+	await fs.writeFile(configPath, JSON.stringify(config, null, '\t'), 'utf8');
+
+	return packageVersions;
+}
+
+module.exports = {
+	promptPackageVersions,
+	promptVersion,
+};
