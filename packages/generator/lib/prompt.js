@@ -142,7 +142,7 @@ async function promptVersion(pkgs) {
 
 	composerConfigs.forEach((pkg) => {
 		packageVersions.push({
-			name: pkg.name,
+			name: pkg.composer.name,
 			package: pkg.path,
 			version,
 		});
