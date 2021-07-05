@@ -7,7 +7,7 @@
 		"satis",
 		"generator"
 	],
-	"homepage": "https://github.com/DekodeInteraktiv/satis-generator",
+	"homepage": "https://github.com/DekodeInteraktiv/satis-generator/blob/main/packages/generator/README.md",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/DekodeInteraktiv/satis-generator.git",
@@ -15,7 +15,7 @@
 	},
 	"bugs": "https://github.com/DekodeInteraktiv/satis-generator/issues",
 	"engines": {
-		"node": ">=0.12.0"
+		"node": ">=14.0.0"
 	},
 	"bin": {
 		"satis-generator": "./bin/satis-generator.js"
