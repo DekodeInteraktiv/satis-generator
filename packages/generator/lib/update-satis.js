@@ -49,7 +49,7 @@ async function updateSatis(pkgs) {
 
 			if (satisConfig.length !== 0) {
 				await asyncForEach(satisConfig, async (fn) => {
-					composer = await fn( composer );
+					composer = await fn(composer);
 				});
 			}
 

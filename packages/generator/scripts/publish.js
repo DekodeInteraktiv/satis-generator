@@ -26,7 +26,7 @@ async function publish() {
 	let pkgs, pkgsToPublish;
 	const { packages, version } = await readConfig();
 
-	if ( version === 'independent' ) {
+	if (version === 'independent') {
 		pkgs = await detectChangedPackages();
 
 		// If no packages is changed, inform user and die.
