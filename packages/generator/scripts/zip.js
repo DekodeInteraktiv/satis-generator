@@ -29,25 +29,29 @@ async function zipPackages() {
 	// Create zips folder.
 	makeDir(ZIPS_DIR);
 
-	const { packages } = await readConfig();
+	const { packages, version: configVersion } = await readConfig();
 	const packageDirs = await glob(packages, { onlyDirectories: true });
 
-	log.info('', 'Fetching tags');
-	// const spinner = ora( 'Fetching tags' ).start();
-	await git.fetch({ '--tags': true });
-	const tags = await git.tag(['--points-at', 'HEAD']);
-	// spinner.stop();
-
-	debug('tags found', tags);
-
 	const zipDirs = [];
+	let tags = [];
+
+	if (configVersion === 'independent') {
+		log.info('', 'Fetching tags');
+		await git.fetch({ '--tags': true });
+		const tags = await git.tag(['--points-at', 'HEAD']);
+
+		debug('tags found', tags);
+	}
 
 	await asyncForEach(packageDirs, async (pkg) => {
 		if (fs.existsSync(path.resolve(pkg, 'composer.json'))) {
 			const composer = await getComposerConfig(pkg);
 			const { name, version } = composer;
 
-			if (tags.indexOf(`${name}@${version}`) !== -1) {
+			if (
+				configVersion !== 'independent' ||
+				tags.indexOf(`${name}@${version}`) !== -1
+			) {
 				zipDirs.push({
 					dir: pkg,
 					name,
