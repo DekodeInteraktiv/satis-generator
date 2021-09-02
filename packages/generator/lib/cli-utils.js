@@ -119,6 +119,7 @@ const spawnScript = (scriptName, args = [], nodeArgs = []) => {
 };
 
 module.exports = {
+	getArgFromCLI,
 	getNodeArgsFromCLI,
 	hasArgInCLI,
 	spawnScript,
