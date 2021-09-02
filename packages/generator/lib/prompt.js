@@ -14,6 +14,7 @@ const { find } = require('lodash');
  */
 const { asyncForEach, getComposerConfig } = require('./utils');
 const readConfig = require('./config');
+const { hasArgInCLI, getArgFromCLI } = require('./cli-utils');
 
 /**
  * Select packages to bump and select versions
@@ -116,22 +117,31 @@ async function promptPackageVersions(pkgs) {
  */
 async function promptVersion(pkgs) {
 	const packageVersions = [];
-	const { version: v } = await readConfig();
 
-	const patch = semver.inc(v, 'patch');
-	const minor = semver.inc(v, 'minor');
-	const major = semver.inc(v, 'major');
+	let version;
 
-	const { version } = await inquirer.prompt({
-		type: 'list',
-		name: 'version',
-		message: `Select a new version (currently ${v})`,
-		choices: [
-			{ name: `Major (${major})`, value: major },
-			{ name: `Minor (${minor})`, value: minor },
-			{ name: `Patch (${patch})`, value: patch },
-		],
-	});
+	if (hasArgInCLI('--version')) {
+		version = getArgFromCLI('--version');
+	} else {
+		const { version: v } = await readConfig();
+
+		const patch = semver.inc(v, 'patch');
+		const minor = semver.inc(v, 'minor');
+		const major = semver.inc(v, 'major');
+
+		const { version: selectedVersion } = await inquirer.prompt({
+			type: 'list',
+			name: 'version',
+			message: `Select a new version (currently ${v})`,
+			choices: [
+				{ name: `Major (${major})`, value: major },
+				{ name: `Minor (${minor})`, value: minor },
+				{ name: `Patch (${patch})`, value: patch },
+			],
+		});
+
+		version = selectedVersion;
+	}
 
 	const composerConfigs = await Promise.all(
 		pkgs.map(async (pkg) => ({
@@ -161,15 +171,17 @@ async function promptVersion(pkgs) {
 	});
 	console.log('');
 
-	const { confirm } = await inquirer.prompt({
-		type: 'confirm',
-		name: 'confirm',
-		message: 'Are you sure you want to publish these packages?',
-		default: true,
-	});
+	if (!hasArgInCLI('--version')) {
+		const { confirm } = await inquirer.prompt({
+			type: 'confirm',
+			name: 'confirm',
+			message: 'Are you sure you want to publish these packages?',
+			default: true,
+		});
 
-	if (!confirm) {
-		process.exit(0);
+		if (!confirm) {
+			process.exit(0);
+		}
 	}
 
 	const configPath = path.resolve(process.cwd(), 'satis-generator.json');
