@@ -57,6 +57,7 @@ async function readConfig() {
 		changelogFilename: 'CHANGELOG.md',
 		changelogTitle: '## Unreleased',
 		version: 'independent',
+		buildSatis: true,
 		...config,
 	};
 

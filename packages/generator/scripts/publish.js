@@ -24,7 +24,7 @@ async function publish() {
 	await checkWorkingTree();
 
 	let pkgs, pkgsToPublish;
-	const { packages, version } = await readConfig();
+	const { packages, version, buildSatis } = await readConfig();
 
 	if (version === 'independent') {
 		pkgs = await detectChangedPackages();
@@ -48,7 +48,10 @@ async function publish() {
 	}
 
 	await updatePackages(pkgsToPublish);
-	await updateSatis(pkgsToPublish);
+
+	if (buildSatis) {
+		await updateSatis(pkgsToPublish);
+	}
 
 	if (!hasArgInCLI('--dry-run')) {
 		await commit(pkgsToPublish);
