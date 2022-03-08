@@ -59,9 +59,9 @@ async function throwIfUncommited() {
  */
 async function throwIfBranch() {
 	const { current } = await git.status();
-	const { branch } = await readConfig();
+	const { branch, checkCurrentBranch } = await readConfig();
 
-	if (current !== branch) {
+	if (checkCurrentBranch && current !== branch) {
 		throw new ValidationError(
 			'EBRANCH',
 			`Current branch is "${current}". The generator should be runned in "${branch}".`,
