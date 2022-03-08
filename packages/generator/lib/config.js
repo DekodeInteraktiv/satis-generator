@@ -52,6 +52,7 @@ async function readConfig() {
 
 	config = {
 		branch: 'main',
+		checkCurrentBranch: true,
 		publishMessage: 'chore(release): publish',
 		plugins: [],
 		changelogFilename: 'CHANGELOG.md',
