@@ -2,7 +2,6 @@
  * External dependencies
  */
 const git = require('simple-git')();
-// const ora = require( 'ora' );
 const log = require('npmlog');
 
 /**
@@ -16,7 +15,6 @@ log.addLevel('success', 3001, { fg: 'green' });
 
 async function commit(pkgs) {
 	log.info('', 'Pushing tags and commit');
-	// const spinner = ora( 'Pushing tags and commit' ).start();
 
 	const { publishMessage, branch } = await readConfig();
 	await git.add('.');

@@ -9,7 +9,6 @@ const glob = require('fast-glob');
 const JSZip = require('jszip');
 const log = require('npmlog');
 const makeDir = require('make-dir');
-// const ora = require( 'ora' );
 const path = require('path');
 
 /**
