@@ -20,7 +20,7 @@
 		"node": ">=14.0.0"
 	},
 	"dependencies": {
-		"replace-in-file": "6.2.0"
+		"replace-in-file": "6.3.2"
 	},
 	"publishConfig": {
 		"access": "public"
