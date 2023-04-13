@@ -15,6 +15,7 @@ const path = require('path');
  * Internal dependencies
  */
 const readConfig = require('../lib/config');
+const { updateZipName } = require('./plugins');
 const { getComposerConfig, asyncForEach, zipName } = require('../lib/utils');
 
 /**
@@ -70,7 +71,13 @@ async function zipPackages() {
 
 	await asyncForEach(zipDirs, async ({ dir, ignore, name, version }) => {
 		const zip = new JSZip();
-		const filename = zipName(name, version);
+		let filename = zipName(name, version);
+
+		if (updateZipName.length !== 0) {
+			await asyncForEach(updateZipName, async (fn) => {
+				filename = await fn(filename);
+			});
+		}
 
 		const pattern = ['**'];
 
