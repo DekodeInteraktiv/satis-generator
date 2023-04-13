@@ -3,7 +3,7 @@
  */
 const { isEmpty } = require('lodash');
 const fs = require('fs');
-const git = require('simple-git/promise')();
+const git = require('simple-git')();
 const glob = require('fast-glob');
 const path = require('path');
 
