@@ -11,6 +11,7 @@ const readConfig = require('./config');
 const updatePackage = [];
 const isChanged = [];
 const satisConfig = [];
+const updateZipName = [];
 
 const registerPlugins = async () => {
 	const config = await readConfig();
@@ -29,6 +30,10 @@ const registerPlugins = async () => {
 		if (has(pluginConfig, 'satisConfig')) {
 			satisConfig.push(pluginConfig.satisConfig);
 		}
+
+		if (has(pluginConfig, 'updateZipName')) {
+			updateZipName.push(pluginConfig.updateZipName);
+		}
 	});
 };
 
@@ -37,4 +42,5 @@ module.exports = {
 	satisConfig,
 	registerPlugins,
 	updatePackage,
+	updateZipName,
 };
