@@ -15,7 +15,7 @@ const path = require('path');
  * Internal dependencies
  */
 const readConfig = require('../lib/config');
-const { updateZipName } = require('../lib/plugins');
+const { registerPlugins, updateZipName } = require('../lib/plugins');
 const { getComposerConfig, asyncForEach, zipName } = require('../lib/utils');
 
 /**
@@ -26,6 +26,8 @@ const { getComposerConfig, asyncForEach, zipName } = require('../lib/utils');
 const ZIPS_DIR = path.resolve(process.cwd(), 'satis-generator-zips');
 
 async function zipPackages() {
+	await registerPlugins();
+
 	// Create zips folder.
 	makeDir(ZIPS_DIR);
 
