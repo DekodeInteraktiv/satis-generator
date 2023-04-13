@@ -58,7 +58,7 @@ async function updateSatis(pkgs) {
 				package: {
 					...composer,
 					require: composer.require || {},
-					dist: {
+					dist: composer.dist || {
 						url: `${zipsDistUrl}/${fileName}`,
 						type: 'zip',
 					},
