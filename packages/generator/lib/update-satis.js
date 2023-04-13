@@ -44,32 +44,36 @@ async function updateSatis(pkgs) {
 				name === composer.name && version === composer.version,
 		);
 
+		let fileName = zipName(composer.name, composer.version);
+
+		if (updateZipName.length !== 0) {
+			await asyncForEach(updateZipName, async (fn) => {
+				fileName = await fn(fileName);
+			});
+		}
+
+		if (satisConfig.length !== 0) {
+			await asyncForEach(satisConfig, async (fn) => {
+				composer = await fn(composer);
+			});
+		}
+
+		const package = {
+			...composer,
+			require: composer.require || {},
+			dist: composer.dist || {
+				url: `${zipsDistUrl}/${fileName}`,
+				type: 'zip',
+			},
+		};
+
 		if (index === -1) {
-			let fileName = zipName(composer.name, composer.version);
-
-			if (updateZipName.length !== 0) {
-				await asyncForEach(updateZipName, async (fn) => {
-					fileName = await fn(fileName);
-				});
-			}
-
-			if (satisConfig.length !== 0) {
-				await asyncForEach(satisConfig, async (fn) => {
-					composer = await fn(composer);
-				});
-			}
-
 			satis.repositories.push({
 				type: 'package',
-				package: {
-					...composer,
-					require: composer.require || {},
-					dist: composer.dist || {
-						url: `${zipsDistUrl}/${fileName}`,
-						type: 'zip',
-					},
-				},
+				package,
 			});
+		} else {
+			satis.repositories[index].package = package;
 		}
 	});
 
