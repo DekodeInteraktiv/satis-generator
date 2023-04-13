@@ -15,7 +15,7 @@ const path = require('path');
  * Internal dependencies
  */
 const readConfig = require('../lib/config');
-const { updateZipName } = require('./plugins');
+const { updateZipName } = require('../lib/plugins');
 const { getComposerConfig, asyncForEach, zipName } = require('../lib/utils');
 
 /**
