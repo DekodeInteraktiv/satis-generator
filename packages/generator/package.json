@@ -1,6 +1,6 @@
 {
 	"name": "@dekode/satis-generator",
-	"version": "0.7.4",
+	"version": "0.7.5",
 	"description": "Build a Satis json config in a monorepo",
 	"license": "MIT",
 	"keywords": [
