@@ -40,7 +40,7 @@ async function zipPackages() {
 	if (configVersion === 'independent') {
 		log.info('', 'Fetching tags');
 		await git.fetch({ '--tags': true });
-		const tags = await git.tag(['--points-at', 'HEAD']);
+		tags = await git.tag(['--points-at', 'HEAD']);
 
 		debug('tags found', tags);
 	}
